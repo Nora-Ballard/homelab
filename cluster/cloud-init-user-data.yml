@@ -1,0 +1,33 @@
+#cloud-config
+
+# Add users to the system
+#
+users:
+    - default
+    - name: nora
+      gecos: Nora Ballard
+      groups: users, admin
+      sudo: ALL=(ALL) NOPASSWORD:ALL
+      sshd_import_id: gh:nora-ballard
+
+byobu_by_default: system
+
+timezone: America/Chicago
+
+growpart:
+      mode: auto
+      devices: "/"
+resize_rootfs: true
+
+packages:
+      - nomad
+      - vault
+      - consul
+      - docker-engine
+      - tailscale
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+runcmd:
+      - [truescale up]
