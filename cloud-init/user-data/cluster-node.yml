@@ -1,0 +1,65 @@
+#cloud-config
+
+byobu_by_default: system
+
+timezone: America/Chicago
+
+growpart:
+      mode: auto
+      devices: "/"
+resize_rootfs: true
+
+packages:
+      - nomad
+      - docker-ce
+      - docker-ce-cli 
+      - containerd.io
+package_reboot_if_required: true
+
+write_files:
+- content: |
+      [Unit]
+      Description=Nomad
+      Documentation=https://nomadproject.io/docs/
+      Wants=network-online.target
+      After=network-online.target
+
+      [Service]
+      ExecReload=/bin/kill -HUP $MAINPID
+      ExecStart=/usr/local/bin/nomad agent -config /etc/nomad.d
+      KillMode=process
+      KillSignal=SIGINT
+      LimitNOFILE=infinity
+      LimitNPROC=infinity
+      Restart=on-failure
+      RestartSec=2
+      StartLimitBurst=3
+      StartLimitIntervalSec=10
+      TasksMax=infinity
+ 
+      [Install]
+      WantedBy=multi-user.target
+  path: /etc/systemd/system/nomad.service
+  permissions: "744"
+- content: |
+      datacenter = "home"
+      data_dir = "/opt/nomad"
+      
+      server {
+        enabled = true
+        bootstrap_expect = 1
+      }
+      
+      client {
+            enabled = true
+      }
+  path: /etc/nomad.d/nomad.hcl
+  permissions: "700"
+      
+
+runcmd:
+      - [nomad -autocomplete-install]
+      - [complete -C /usr/local/bin/nomad nomad]
+      - [mkdir --parents /opt/nomad]
+      - [systemctl enable nomad]
+      - [systemctl start nomad]
