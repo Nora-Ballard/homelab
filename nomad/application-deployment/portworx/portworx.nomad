@@ -33,7 +33,6 @@ job "portworx" {
     network {
       mode = "host"
       
-      mbits = 100
       port "portworx" {
         static = "9015"
       }
