@@ -71,7 +71,7 @@ job "portworx" {
         # do not remove the last parameter (needed for health check)
         args = [
             "-c", "px-cluster-nomadv1",
-            "-a"
+            "-a",
             "-k", "consul://127.0.0.1:8500",
             "--endpoint", "0.0.0.0:9015"
         ]
