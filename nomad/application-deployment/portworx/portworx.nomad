@@ -3,7 +3,8 @@ job "portworx" {
   datacenters = ["dc1"]
 
   group "portworx" {
-    count = 3
+    count = 1
+    
 
     constraint {
       operator  = "distinct_hosts"
@@ -29,6 +30,15 @@ job "portworx" {
       stagger          = "30s"
     }
 
+    network {
+      mode = "host"
+      
+      mbits = 100
+      port "portworx" {
+        static = "9015"
+      }
+    }
+
     task "px-node" {
       driver = "docker"
       kill_timeout = "120s"   # allow portworx 2 min to gracefully shut down
@@ -48,24 +58,24 @@ job "portworx" {
 
       # setup environment variables for px-nodes
       env {
-        "AUTO_NODE_RECOVERY_TIMEOUT_IN_SECS" = "1500"
-        "PX_TEMPLATE_VERSION"                = "V4"
+        AUTO_NODE_RECOVERY_TIMEOUT_IN_SECS = "1500"
+        PX_TEMPLATE_VERSION                = "V4"
        }
 
       # container config
       config {
         image        = "portworx/oci-monitor:2.1.1"
-        network_mode = "host"
         ipc_mode = "host"
         privileged = true
 
         # configure your parameters below
         # do not remove the last parameter (needed for health check)
         args = [
-            "-c", "px-cluster-nomadv8",
-            "-a",
-            "-k", "consul://127.0.0.1:8500",
-            "--endpoint", "0.0.0.0:9015"
+            "-c", "px-cluster-nomadv1",
+            "-a"
+            # Remove until consul integragion is complete.
+            # "-k", "consul://127.0.0.1:8500",
+            # "--endpoint", "0.0.0.0:9015"
         ]
 
         volumes = [
@@ -86,13 +96,6 @@ job "portworx" {
       resources {
         cpu    = 1024
         memory = 2048
-
-        network {
-          mbits = 100
-          port "portworx" {
-            static = "9015"
-          }
-        }
       }
     }
   }
