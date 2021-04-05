@@ -1,4 +1,10 @@
 job "theia" {
+  region = "global"
+  
+  datacenters = ["dc1"]
+  
+  type = "service"
+  
   update {
     stagger      = "10s"
     max_parallel = 1
