@@ -30,7 +30,13 @@ job "theia" {
 
       config {
         image = "theiaide/theia:latest"
+        
         ports = [ "http" ]
+        
+        volumes = [
+          "name=theiaide,size=10,repl=3/:/home/project",
+        ]
+        volume_driver = "pxd"
       }
     }
   }
