@@ -14,7 +14,9 @@ job "theia" {
     count = 1
     
     network {
-      port "http" {}
+      port "http" {
+        to = 3000
+      }
     }
     restart {
       attempts = 10
