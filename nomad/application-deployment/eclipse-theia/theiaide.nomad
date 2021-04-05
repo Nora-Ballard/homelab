@@ -1,10 +1,10 @@
-job {
+job "theia" {
   update {
     stagger      = "10s"
     max_parallel = 1
   }
   
-  group "theiaide" {
+  group "ide" {
     count = 1
     
     network {
