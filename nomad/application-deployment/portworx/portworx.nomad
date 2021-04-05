@@ -72,9 +72,8 @@ job "portworx" {
         args = [
             "-c", "px-cluster-nomadv1",
             "-a"
-            # Remove until consul integragion is complete.
-            # "-k", "consul://127.0.0.1:8500",
-            # "--endpoint", "0.0.0.0:9015"
+            "-k", "consul://127.0.0.1:8500",
+            "--endpoint", "0.0.0.0:9015"
         ]
 
         volumes = [
