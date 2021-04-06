@@ -20,6 +20,13 @@ job "theia" {
         to = 3000
       }
     }
+    
+    ephemeral_disk {
+      migrate = true
+      size    = 500 # MB
+      sticky  = true
+    }
+    
     restart {
       attempts = 10
       interval = "5m"
@@ -33,6 +40,13 @@ job "theia" {
       config {
         image = "theiaide/theia:latest"
         ports = [ "http" ]
+        
+        mounts = [{
+          type     = "bind"
+          source   = "local"
+          target   = "/home/project"
+          readonly = false
+        }]
       }
     }
   }
