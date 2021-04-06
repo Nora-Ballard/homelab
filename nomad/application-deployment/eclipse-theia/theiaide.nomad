@@ -14,6 +14,8 @@ job "theia" {
     count = 1
     
     network {
+      mode = "host"
+      
       port "http" {
         to = 3000
       }
