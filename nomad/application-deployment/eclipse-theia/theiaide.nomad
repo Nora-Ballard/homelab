@@ -1,3 +1,13 @@
+variable "ephemeral_disk_size" {
+  type    = number
+  default = 500 # MB
+}
+
+variable "version" {
+  type    = string
+  default = "latest"
+}
+
 job "theia" {
   region = "global"
   
@@ -23,7 +33,7 @@ job "theia" {
     
     ephemeral_disk {
       migrate = true
-      size    = 500 # MB
+      size    = var.ephemeral_disk_size
       sticky  = true
     }
     
@@ -38,7 +48,7 @@ job "theia" {
       driver = "docker"
 
       config {
-        image = "theiaide/theia:latest"
+        image = "theiaide/theia:${var.version}"
         ports = [ "http" ]
         
         mounts = [{
