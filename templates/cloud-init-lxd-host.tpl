@@ -3,7 +3,7 @@ write_files:
     config:
       core.https_address: '[::]:8443'
       core.trust_password: ${trust_password}
-      maas.api.key: ${mass_api_key}
+      maas.api.key: ${maas_api_key}
       maas.api.url: ${maas_api_url}
       images.auto_update_interval: ${images_auto_update_interval}
     networks: []
