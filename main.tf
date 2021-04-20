@@ -12,11 +12,11 @@ terraform {
 }
 
 resource "maas_instance" "lxd-host" {
-  count        = 1
+  count = 1
+
   architecture = "amd64/generic"
-  # memory       = 30                                     # ? Is this in GB
-  install_kvm  = true
-  tags         = ["physical","network_10gb","sr-iov"]
+  install_kvm  = false # Do not use virsh, we are using lxd
+  tags         = ["physical", "network_10gb", "sr-iov"]
 
   user_data = templatefile("${path.module}/templates/cloud-init-lxd-host.tpl", {
     trust_password              = random_password.lxd_trust.result
@@ -27,6 +27,9 @@ resource "maas_instance" "lxd-host" {
     bridge_interface_name       = "lxdbr0"
   })
 }
+# TODO: Update the provider to add the register_vmhost=True value, that was added in v3.0 beta-3
+#       https://discourse.maas.io/t/maas-3-0-beta3-has-been-released/4454
+# TODO: See if there is a way for the host to register itself.
 
 resource "random_password" "lxd_trust" {
   length           = 20
