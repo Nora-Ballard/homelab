@@ -19,7 +19,11 @@
 # and copy the resulting certificate files from there.
 # 
 # The TrueNAS stores the certificates in the '/etc/certificates/' folder
-# The UDM Pro stores the certificates in the '/mnt/dta/unifi-os/unifi-core/config/' folder.
+# The UDM Pro stores the certificates in the '/mnt/data/unifi-os/unifi-core/config/' folder.
+#
+# The UDM Pro Captive Portal stores stores certificates in the '/mnt/data/unifi-os/unifi/data' folder.
+# The UDM Pro Captive Portal can be viewed at https://fqdn_controller:8843/guest/s/default/#/
+# TODO: Configure the Captive Portal certificate.
 # 
 # We have FreeBSD, Blink.sh, and BusyBox in the mix, so there are probably better ways
 # for some of these commands, but we had to account for compatibility between them all.
