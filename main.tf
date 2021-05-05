@@ -20,9 +20,3 @@ resource "maas_instance" "lxd-host" {
 
   user_data = templatefile("${path.module}/templates/cloud-init-lxd-host.tpl.yml", {})
 }
-
-resource "random_password" "lxd_trust" {
-  length           = 20
-  special          = true
-  override_special = "_%@"
-}
