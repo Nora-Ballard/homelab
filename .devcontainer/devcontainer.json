@@ -41,7 +41,8 @@
 	// "forwardPorts": [],
 
 	"containerEnv": {
-		"TF_PLUGIN_CACHE_DIR": "${containerWorkspaceFolder}/.terraform/plugin-cache"
+		"TF_PLUGIN_CACHE_DIR": "${containerWorkspaceFolder}/.terraform/plugin-cache",
+		"TF_CLI_CONFIG_FILE": "${containerWorkspaceFolder}/dev.tfrc"
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.

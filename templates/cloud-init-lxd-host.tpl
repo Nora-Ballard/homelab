@@ -1,40 +1,7 @@
-write_files:
-  - content: |
-    config:
-      core.https_address: '[::]:8443'
-      core.trust_password: ${trust_password}
-      maas.api.key: ${maas_api_key}
-      maas.api.url: ${maas_api_url}
-      images.auto_update_interval: ${images_auto_update_interval}
-    networks: []
-    storage_pools:
-      - config: {}
-        description: ""
-        name: default
-        driver: dir
-    profiles:
-    - config: {}
-      description: ""
-      devices:
-        eth0:
-          maas.subnet.ipv4: ${maas_subnet_name_ipv4}
-          name: eth0
-          nictype: bridged
-          parent: ${bridge_interface_name}
-          type: nic
-      name: default
-    cluster: null
-   path: /etc/lxd_preeseed.yaml
-
+# cloud-config
 
 package:
     - bash-completion
 
-snap:
-    commands:
-        1: [ 'refresh' ]
-    
 runcmd:
-    - cat /etc/lxd-preeseed.yaml | lxd init --preeseed
     - lxd completion bash > /etc/bash_completion.d/lxd 
-    - lxd activateifneeded
