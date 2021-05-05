@@ -18,7 +18,7 @@ resource "maas_instance" "lxd-host" {
   register_vmhost = true
   tags            = ["physical", "network_10gb", "sr-iov"]
 
-  user_data = templatefile("${path.module}/templates/cloud-init-lxd-host.tpl", {})
+  user_data = templatefile("${path.module}/templates/cloud-init-lxd-host.tpl.yml", {})
 }
 
 resource "random_password" "lxd_trust" {
