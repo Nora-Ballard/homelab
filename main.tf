@@ -10,6 +10,22 @@ terraform {
   }
 }
 
+locals {
+  init_base = {
+    timezone         = "America/Chicago"
+    byobu_by_default = "system"
+
+    package = [
+      "bash-completion",
+      "etckeeper",
+    ]
+
+    runcmd = [
+      "systemctl mask ctrl-alt-del.target && systemctl daemon-reload"
+    ]
+  }
+}
+
 resource "maas_instance" "lxd-host" {
   count = 1
 
@@ -18,5 +34,13 @@ resource "maas_instance" "lxd-host" {
   register_vmhost = true
   tags            = ["physical", "network_10gb", "sr-iov"]
 
-  user_data = templatefile("${path.module}/templates/cloud-init-lxd-host.tpl.yml", {})
+  user_data = yamlencode(merge(
+    local.init_base,
+    {
+      runcmd = [
+        "lxd completion bash > /etc/bash_completion.d/lxd",
+      ]
+    }
+  ))
+
 }
