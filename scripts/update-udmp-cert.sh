@@ -23,6 +23,8 @@
 #
 # The UDM Pro Captive Portal stores stores certificates in the '/mnt/data/unifi-os/unifi/data' folder.
 # The UDM Pro Captive Portal can be viewed at https://fqdn_controller:8843/guest/s/default/#/
+# See https://scotthelme.co.uk/setting-up-https-on-the-udm-pro/
+#
 # TODO: Configure the Captive Portal certificate.
 # 
 # We have FreeBSD, Blink.sh, and BusyBox in the mix, so there are probably better ways
