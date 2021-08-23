@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     maas = {
-      source = "suchpuppet/maas"
+      source = "ionutbalutoiu/maas"
     }
     random = {
       source  = "hashicorp/random"
@@ -26,21 +26,8 @@ locals {
   }
 }
 
-resource "maas_instance" "lxd-host" {
-  count = 1
-
-  architecture    = "amd64/generic"
-  install_kvm     = false
-  register_vmhost = true
-  tags            = ["physical", "network_10gb", "sr-iov"]
-
-  user_data = yamlencode(merge(
-    local.init_base,
-    {
-      runcmd = [
-        "lxd completion bash > /etc/bash_completion.d/lxd",
-      ]
-    }
-  ))
-
+resource "maas_vm_host" "lxd" {
+  type                     = "lxd"
+  machine                  = var.vm_host_machine
+  memory_over_commit_ratio = 2
 }
