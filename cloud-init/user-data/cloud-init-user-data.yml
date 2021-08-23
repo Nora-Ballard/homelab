@@ -1,0 +1,78 @@
+#cloud-config
+
+byobu_by_default: enable
+
+timezone: America/Chicago
+
+packages:
+      - nomad
+      - vault
+      - consul
+      - terraform
+      - terraform-ls
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - mosh
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+snap:
+  command:
+    00: ['install','nvim']
+
+write_files:
+  - content: |
+    if [ -f ~/.bash_local]; then
+        . ~/.bash_local
+    fi
+
+    if [ -f /usr/local/bin/nomad]; then
+      nomad -autocomplete-install && complete -C /usr/local/bin/nomad nomad
+    fi
+  - path: /home/ubuntu/.bash_rc
+  - append: true
+
+write_files:
+  - content: |
+    # enable less to scroll with the mouse
+    export LESS='-RiF --mouse --wheel-lines=3'
+  - path: /home/ubuntu/.bash_local
+
+write_files:
+  - content: |
+    set -g mouse on
+
+    set-option -sa terminal-overrides ',XXX:RGB'
+    set-option -ga terminal-overrides ',XXX:Tc'
+  - path: /home/ubuntu/.tmux.conf
+  
+write_files:
+- content: |
+      [Unit]
+      Description=Nomad
+      Documentation=https://nomadproject.io/docs/
+      Wants=network-online.target
+      After=network-online.target
+      [Service]
+      ExecReload=/bin/kill -HUP $MAINPID
+      ExecStart=/usr/local/bin/nomad agent -config /etc/nomad.d
+      KillMode=process
+      KillSignal=SIGINT
+      LimitNOFILE=infinity
+      LimitNPROC=infinity
+      Restart=on-failure
+      RestartSec=2
+      StartLimitBurst=3
+      StartLimitIntervalSec=10
+      TasksMax=infinity
+ 
+      [Install]
+      WantedBy=multi-user.target
+  path: /etc/systemd/system/nomad.service
+  permissions: "744"
+
+
+runcmd:
+      - []

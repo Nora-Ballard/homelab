@@ -45,6 +45,18 @@ job "theia" {
     }
     
     task "theia" {
+      service {
+        name = "theia-ide"
+        port = "http"
+
+        check {
+          type = "http"
+          port = "http"
+          path = "/"
+          interval = "5s"
+          timeout  = "2s"
+        }
+      }
       driver = "docker"
 
       config {
