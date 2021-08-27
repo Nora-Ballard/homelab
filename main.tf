@@ -1,4 +1,11 @@
 terraform {
+  backend "remote" {
+    organization = "home-ballard"
+
+    workspaces {
+      name = "homelab"
+    }
+  }
   required_providers {
     maas = {
       source = "ionutbalutoiu/maas"
