@@ -59,7 +59,7 @@ data "template_cloudinit_config" "kubernetes" {
 }
 
 resource "maas_instance" "kubernetes" {
-  count = 1
+  count = 3
 
   allocate_params {
     min_cpu_count = 2
