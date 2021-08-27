@@ -76,13 +76,13 @@ runcmd:
 write_files:
 - path   : "/etc/bash_completion.d/kubectl"
   content: |
-    "source <(kubectl completion bash)"
+    source <(kubectl completion bash)
 
 # Let iptables see bridged traffic
 write_files: 
 - path: "/etc/modules-load.d/k8s.conf"
   content: |
-    "br_netfilter"
+    br_netfilter
 
 write_files: 
 - path: "/etc/sysctl.d/k8s.conf"
