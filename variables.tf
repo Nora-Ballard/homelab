@@ -13,3 +13,7 @@ variable "vm_host_machine" {
   type        = string
   description = "MAAS Machine Name of the VM Host"
 }
+
+variable "vlan_id" {
+  type = string
+}
