@@ -86,15 +86,12 @@ jobs:
     - name: Setup Go
       uses: actions/setup-go@v2.1.4
       with:
-        go-version: 1.6
+        go-version: '^1.16'
 
     # Build the ionutbalutoiu/terraform-provider-maas provider
     - name: Build terraform-provider-maas
       run: |
-        go version \
-        && echo "GOBIN: $GOBIN" \
-        && echo "GOPATH: $GOPATH" \
-        && sudo apt install -y build-essential \
+        sudo apt install -y build-essential \
         && cd providers/terraform-provider-maas \
         && make install \
 
