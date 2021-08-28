@@ -8,7 +8,7 @@ terraform {
   }
   required_providers {
     maas = {
-      source = "ionutbalutoiu/maas"
+      source  = "ionutbalutoiu/maas"
       version = "0.1.0"
     }
     random = {
