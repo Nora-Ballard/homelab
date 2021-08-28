@@ -79,8 +79,9 @@ jobs:
         fetch-depth: 1
         repository: ionutbalutoiu/terraform-provider-maas
         ref: v1.0.0
-        path: ${{runner.temp}}/src/terraform-provider-maas     
+        path: providers/terraform-provider-maas
 
+    
     # Setup Go
     - name: Setup Go
       uses: actions/setup-go@v2.1.4
@@ -95,9 +96,9 @@ jobs:
 
     # Build the ionutbalutoiu/terraform-provider-maas provider
     - name: Build terraform-provider-maas
+      working-directory: providers/terraform-provider-maas
       run: |
-        cd ${{runner.temp}}/src/terraform-provider-maas \
-        && mkdir -p ${{runner.temp}}/plugin-cache/registry.terraform.io/ionutbalutoiu/maas/0.1.0/$(go env GOOS)/$(go env GOARCH) \
+        mkdir -p ${{runner.temp}}/plugin-cache/registry.terraform.io/ionutbalutoiu/maas/0.1.0/$(go env GOOS)/$(go env GOARCH) \
         && go build -o ${{runner.temp}}/plugin-cache/registry.terraform.io/ionutbalutoiu/maas/0.1.0/$(go env GOOS)/$(go env GOARCH)
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
