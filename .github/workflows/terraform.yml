@@ -75,6 +75,8 @@ jobs:
     # Setup Go for building providers
     - name: Setup Go environment
       uses: actions/setup-go@v2.1.4
+      with:
+        version: 1.6
   
     # Checkout the ionutbalutoiu/terraform-provider-maas provider
     - name: Checkout terraform-provider-maas
