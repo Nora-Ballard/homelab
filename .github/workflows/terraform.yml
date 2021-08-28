@@ -71,12 +71,19 @@ jobs:
       with:
         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
     
-    # Install the ionutbalutoiu/terraform-provider-maas provider
-    - name: Install terraform-provider-maas
+    # Checkout the ionutbalutoiu/terraform-provider-maas provider
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+        repository: ionutbalutoiu/terraform-provider-maas
+        ref: v1.0.0
+        path: providers/terraform-provider-maas
+
+    # Build the ionutbalutoiu/terraform-provider-maas provider
+    - name: Build the terraform-provider-maas provider
       run: |
-        git clone --depth 1 --branch "v1.0.0" https://github.com/ionutbalutoiu/terraform-provider-maas.git /tmp/terraform-provider-maas \
-        && cd /tmp/terraform-provider-maas \
-        && make install
+        cd providers/tmpterraform-provider-maas \
+        && make install \
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
