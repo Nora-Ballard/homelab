@@ -92,7 +92,7 @@ jobs:
     - name: Setup nodejs
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '14'
 
     # Build the ionutbalutoiu/terraform-provider-maas provider
     - name: Build terraform-provider-maas
@@ -103,6 +103,8 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
+      env:
+        TF_PLUGIN_CACHE_DIR: ${{runner.temp}}/plugin-cache
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
