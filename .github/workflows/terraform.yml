@@ -88,6 +88,12 @@ jobs:
       with:
         go-version: '^1.16'
 
+    # Setup Node
+    - name: Setup nodejs
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
     # Build the ionutbalutoiu/terraform-provider-maas provider
     - name: Build terraform-provider-maas
       run: |
